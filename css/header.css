@@ -1,0 +1,22 @@
+header{
+    background-color: rgb(245, 155, 95);
+}
+header>div{
+    width: 1170px;
+    margin:0 auto;
+    font-weight: 500;
+    color: #fff;
+}
+header .el-col{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+header .el-col:hover{
+    cursor: pointer;
+    background-color: #FF6666;
+    color: rgb(255, 251, 21);
+}
+header a{
+    text-decoration:none;
+    color: #fff;
+}

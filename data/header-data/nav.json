@@ -1,0 +1,12 @@
+[
+    {
+        "label":"首页",
+        "id":"home"
+    },{
+        "label":"川香麻辣",
+        "id":"food"    
+    },{
+        "label":"编程学习",
+        "id":"learn"
+    }
+]
