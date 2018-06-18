@@ -1,14 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="./images/icon.jpg" type="image/jpg">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/home.css">
     <title>sinbad blog</title>
+    <style>
+        body {
+            background-color: rgb(221, 223, 224);
+            font-family: "微软雅黑", "Helvetica", "Sans-serif", "Comic Sans MS";
+            text-align: center;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .router{
+            transition: 1s all;
+        }
+        img {
+            width: 100%;
+        }
+        .router-change-enter,.router-change-leave-to{
+            opacity: 0;
+            transform: rotateZ(360deg);
+        }
+        .router-change-enter-to,.router-change-leave{
+            opacity: 1;
+            transform: rotateZ(0);
+        }
+    </style>
 </head>
+
 <body>
     <div id="app">
-        test
+        <header>
+            <div>
+                <el-row :gutter="20" tag="nav">
+                    <router-link :to="item.id"
+                        v-for="(item, index) in navList" :key="index" >
+                        <el-col :span="24/navList.length">
+                            <span v-text="item.label"></span>
+                        </el-col>
+                    </router-link>
+                </el-row>
+            </div>
+        </header>
+        <transition  name="router-change">
+            <router-view class="router"></router-view>
+        </transition>       
     </div>
+    <script src="./js/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script src="./js/vuex.js"></script>
+    <script src="./js/store/store.js"></script>
+    <script src="./js/route/router.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                navList: [],
+                loading: null,
+                test: ''
+            },
+            store,
+            router,
+            created() {
+                const loading = this.$loading({
+                    lock: true,
+                    text: '玩命加载中',
+                    fullscreen: true,
+                    background: 'rgba(0, 0, 0, 0.7)',
+                    body: true
+                });
+                this.$store.commit('setLoading', loading);
+                // setTimeout(() => {
+                //     fetch('./data/header-data/nav.json')
+                // .then(res => res.json()).then(res => {
+                //     this.navList = res;
+                // });     
+                // }, 2000);
+                fetch('./data/header-data/nav.json')
+                    .then(res => res.json()).then(res => {
+                        this.navList = res;
+                    });
+
+            },
+            mounted() {
+                console.log('mounted')
+            },
+            updated() {
+                if (this.$store.state.loading) {
+                    this.$store.state.loading.close();
+                    this.$store.commit('clearLoading');
+                }
+            },
+            destroyed() {
+                console.log('destroyed')
+            },
+            components: {
+                myTest: () => fetch('./test.js').then(
+                    res => res.text()
+                ).then(res =>
+                    eval(res)
+                )
+            },
+            methods: {
+
+            }
+
+        });
+    </script>
 </body>
+
 </html>
