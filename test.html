@@ -73,16 +73,72 @@
                 transform: rotateZ(0);
             }
         }
+
+        .top-shadow{
+            height: 200px;
+            margin-top: 100px;
+            background-color: lightblue;
+        }
+        body::before{
+            content: '';
+            display: block;
+            height:10px;
+            background: #000;
+            position: fixed;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            -webkit-box-shadow: 0 0 10px rgba(0,0,0,.8);
+            box-shadow: 0 0 10px rgba(0,0,0,.8);
+
+        }
+        a[href^="http"]:empty::before{
+            content: attr(href);
+            pointer-events: none;
+            position: relative;
+        }
+        .text{
+            color: transparent;
+            text-shadow: 0 0 5px rgba(0,0,0,.5);
+        }
+        h2[data-text]{
+            position: relative;
+        }
+        h2[data-text]::after{
+            content: attr(data-text);
+            position: absolute;
+            z-index: 10;
+            color: #e3e3e3;
+            top: 0;
+            left: 0;
+            -webkit-mask-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0)),color-stop(50%,rgba(0,0,0,0)),to(rgba(0,0,0,0)));
+
+        }
+        span{
+            background: linear-gradient(to right, red, blue);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        h1{
+        position: relative;
+        color: yellow;
+    }
+    h1:before{
+        content: attr(text);
+        position: absolute;
+        z-index: 10;
+        color:pink;
+        -webkit-mask:linear-gradient(to left, red, transparent );
+    }
     </style>
 </head>
 <body>
-    <div>
-        <span class="fr">我</span>
-        <span class="se">会</span>
-        <span class="th">动</span>
-        <span class="fo">信</span>
-        <span class="fi">不</span>
+    <div class="top-shadow"> 
+        <h1 text="还是没有变化啊">还是没有变化啊</h1>
+        <div class="text">这是一个测试页面</div>
+        <a href="http://www.baidu.com"></a>
+        <h2 data-text="哈哈哈">哈哈哈</h2>
+        <span>变不变啊</span>
     </div>
-    <div class="box">靠</div>
 </body>
 </html>
